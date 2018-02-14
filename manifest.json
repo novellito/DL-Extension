@@ -5,7 +5,8 @@
     "offline_enabled": true,
 
     "permissions": [
-      "storage"
+      "storage",
+      "tabs"
     ],
   
     "background": {

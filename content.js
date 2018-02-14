@@ -50,52 +50,60 @@ chrome.runtime.sendMessage({
     };
   };
   
+  chrome.storage.local.get('value', function(obj) {
 
-  var professors = ['Philip Nufrio'
-  ];
+
+  $('#first_name').bind('typeahead:select', function(ev, suggestion) {
+
+     
+      replaceField();
+      
+  });
+
+  $('#first_name').bind('typeahead:autocomplete', function(ev, suggestion) {
+    replaceField();
+  });
   
+      
   $('#first_name').typeahead({
     hint: true,
     highlight: true,
     minLength: 1
   },
   {
-    name: 'professors',
-    source: substringMatcher(professors)
+    name: 'professorsList',
+    source: substringMatcher(obj.value)
   });
-  
-//   $('#first_name').bind('typeahead:select', function(ev, suggestion) {
-
-//     // $("#last_name").val("Nufrio"); // set last name
-      
-//   });
-
-//   $('#first_name').bind('typeahead:autocomplete', function(ev, suggestion) {
-
-//     // $("#last_name").val("Nufrio"); // set last name
-    
-//   });
 
   $('#first_name').bind('typeahead:change', function(ev, suggestion) {
-
-    $("#last_name").val("Nufrio"); // set last name
     
+    replaceField();
     let first_name = $('#first_name').val().split(" ")[0]; //get first name
     $("#first_name").val(first_name);
     
-    let last_name = $('#first_name').val().split(" ")[1]; //get last name
-    $("#first_name").val(first_name);
-
   });
   
-  $("#course_number").focus(function() {
+  function replaceField() {
+    let last_name = $('#first_name').val().split(" ")[1]; //get last name
+    $("#last_name").val(last_name);
 
-      chrome.storage.local.get('value', function(obj) {
-          //Notify that we get the value.
-        //   message('Value is ' + obj.value);
-          console.log(obj);
-          professors.push(obj.value);
-          console.log(professors);
-        });
-    })
-console.log("hello");
+    let regex = /[^0-9](?=[0-9])/g; //for putting space in between course number
+    let courseNum = $('#first_name').val().split(" ")[4];
+
+    $(".client_type").val("Faculty");
+    $("#academic_program").val($('#first_name').val().split(" ")[2]);
+    $("#cohort_number").val($('#first_name').val().split(" ")[3]);
+    $("#course_number").val($('#first_name').val().split(" ")[4]);
+
+    $("#course_number").val(courseNum.replace(regex, '$& '));
+  }
+});
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    if( request.message === "reload" ) {
+      console.log("hey");
+      location.reload();
+         }
+  }
+);
