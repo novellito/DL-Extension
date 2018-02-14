@@ -2,32 +2,66 @@
 window.addEventListener('DOMContentLoaded', function () {
 
   chrome.storage.local.get('value', function (obj) {
-    obj.value.map((professor, index) => //Load initial info
-      $("#professors-list").append(`<li class=${index}>${professor} <button class="delete">Delete</button></li> `)
-    );
+    if (typeof (obj.value) == 'string') {
+      $("#professors-list").append(`<li class=0>${obj.value} <button class="delete">Delete</button></li> `)
+    } else {
+      try {
+        obj.value.map((professor, index) => //Load initial info
+          $("#professors-list").append(`<li class=${index}>${professor} <button class="delete">Delete</button></li> `)
+        );
+
+      } catch (err) {
+        console.log("No current professors");
+      }
+    }
 
     $(".delete").on("click", function () {
 
       let listElem = $(this).parent()[0];
       let index = listElem.className;
-      obj.value.splice(index, 1);
-      $(this).parent()[0].remove();
 
-      chrome.storage.local.set({ // update list after deletion
-        'value': obj.value
-      }, function () {
-        chrome.tabs.query({
-          active: true,
-          currentWindow: true
-        }, function (tabs) {
-          chrome.tabs.sendMessage(
-            tabs[0].id, {
-              "message": "reload"
-            }
-          );
+      if (typeof (obj.value) == 'string') {
+
+        $(this).parent()[0].remove();
+
+        chrome.storage.local.set({ // update list after deletion
+          'value': []
+        }, function () {
+          chrome.tabs.query({
+            active: true,
+            currentWindow: true
+          }, function (tabs) {
+            chrome.tabs.sendMessage(
+              tabs[0].id, {
+                "message": "reload"
+              }
+            );
+          });
+          location.reload();
         });
-        location.reload();
-      });
+
+
+      } else {
+        obj.value.splice(index, 1);
+        $(this).parent()[0].remove();
+
+        chrome.storage.local.set({ // update list after deletion
+          'value': obj.value
+        }, function () {
+          chrome.tabs.query({
+            active: true,
+            currentWindow: true
+          }, function (tabs) {
+            chrome.tabs.sendMessage(
+              tabs[0].id, {
+                "message": "reload"
+              }
+            );
+          });
+          location.reload();
+        });
+
+      }
     });
   });
 
@@ -63,41 +97,66 @@ window.addEventListener('DOMContentLoaded', function () {
     let data = firstName + " " + lastName + " " + program + " " + cohort + " " + courseNum;
 
     chrome.storage.local.get('value', function (obj) {
+      console.log(obj);
 
-      obj.value.push(data);
+      if (obj.value == undefined) {
+        chrome.storage.local.set({
+          'value': data
+        }, function () {
 
-      chrome.storage.local.set({
-        'value': obj.value
-      }, function () {
+          $("#professors-list").append(`<li>${firstName} ${lastName}`);
 
-        $("#professors-list").append(`<li>${firstName} ${lastName}`);
+          chrome.tabs.query({
+            active: true,
+            currentWindow: true
+          }, function (tabs) {
+            chrome.tabs.sendMessage(
+              tabs[0].id, {
+                "message": "reload"
+              }
+            );
+          });
 
-        chrome.tabs.query({
-          active: true,
-          currentWindow: true
-        }, function (tabs) {
-          chrome.tabs.sendMessage(
-            tabs[0].id, {
-              "message": "reload"
-            }
-          );
+          location.reload();
+
         });
+      } else {
 
-        location.reload();
 
-      });
+        obj.value.push(data);
+
+        chrome.storage.local.set({
+          'value': obj.value
+        }, function () {
+
+          $("#professors-list").append(`<li>${firstName} ${lastName}`);
+
+          chrome.tabs.query({
+            active: true,
+            currentWindow: true
+          }, function (tabs) {
+            chrome.tabs.sendMessage(
+              tabs[0].id, {
+                "message": "reload"
+              }
+            );
+          });
+
+          location.reload();
+
+        });
+      }
 
     });
 
   });
 
-  var acc = document.getElementsByClassName("accordion");
-  var i;
+  let acc = document.getElementsByClassName("accordion");
 
-  for (i = 0; i < acc.length; i++) {
+  for (let i = 0; i < acc.length; i++) {
     acc[i].addEventListener("click", function () {
       this.classList.toggle("active");
-      var panel = this.nextElementSibling;
+      let panel = this.nextElementSibling;
       if (panel.style.display === "block") {
         panel.style.display = "none";
       } else {
