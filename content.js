@@ -6,7 +6,6 @@ chrome.runtime.sendMessage({
 
 chrome.storage.local.get('name',function(obj) {
 
-  console.log(obj)
   $(".writer").val(obj.name);
   $(".assign_to").val(obj.name);
 });
@@ -37,6 +36,29 @@ var substringMatcher = function (strs) {
 
 chrome.storage.local.get('value', function (obj) {
 
+  console.log(obj);
+
+  if(typeof(obj.value) == 'string') {
+    $('#first_name').typeahead({
+      hint: true,
+      highlight: true,
+      minLength: 1
+    }, {
+      name: 'professorsList',
+      source: substringMatcher([obj.value])
+    });
+  } else {
+    $('#first_name').typeahead({
+      hint: true,
+      highlight: true,
+      minLength: 1
+    }, {
+      name: 'professorsList',
+      source: substringMatcher(obj.value)
+    });
+  }
+
+
   $('#first_name').bind('typeahead:select', function (ev, suggestion) {
     replaceField();
   });
@@ -45,15 +67,6 @@ chrome.storage.local.get('value', function (obj) {
     replaceField();
   });
 
-
-  $('#first_name').typeahead({
-    hint: true,
-    highlight: true,
-    minLength: 1
-  }, {
-    name: 'professorsList',
-    source: substringMatcher(obj.value)
-  });
 
   $('#first_name').bind('typeahead:change', function (ev, suggestion) {
 

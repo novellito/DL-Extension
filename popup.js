@@ -101,7 +101,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
       if (obj.value == undefined) {
         chrome.storage.local.set({
-          'value': data
+          'value': [data]
         }, function () {
 
           $("#professors-list").append(`<li>${firstName} ${lastName}`);
