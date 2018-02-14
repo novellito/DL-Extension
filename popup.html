@@ -1,47 +1,121 @@
 <!DOCTYPE html>
 <html>
-  <head>
-      <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="popup.js"></script>
-    <style>
-      body {
-        width:400px;
-      }
-      #form {
-        margin-left:11%;
-      }
-      input {
-        width:150px;
-      }
 
-      #professors-list {
-        overflow:scroll;
-        height:100px;
-        overflow-x: hidden;
-      }
+<head>
+  <script type="text/javascript" src="./dependencies/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="popup.js"></script>
+  <style>
+    body {
+      width: 400px;
+    }
 
-      .courseNum {
-        font-size:.9em;
+    #form {
+      margin-left: 11%;
+    }
 
-      }
-    
-    </style>
-  </head>
-  <body>
-    <h3 style="font-weight:bold; text-align:center;">Professors</h3>
+    input {
+      width: 150px;
+    }
 
-    <ul id="professors-list">
-    </ul>
-    
-    <div id="form">
+    #professors-list {
+      overflow: scroll;
+      height: 80px;
+      overflow-x: hidden;
+    }
 
-      <input type="text" name="fname" placeholder="First name">
-      <input type="text" name="lname" placeholder="Last name"><br>
-      <input type="text" name="program" placeholder="Academic Program">
-      <input type="text" name="cohort" placeholder="Cohort"><br>
-      <input class="courseNum" type="text" name="courseNum" placeholder="Course#: Enter with no space!">
-      <button class="add">add</button>
-    </div>
+    .courseNum {
+      font-size: .9em;
 
-  </body>
+    }
+
+    button {
+      background-color: #008CBA;
+      border: none;
+      color: white;
+      padding: 8px 19px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin-left: 10%;
+    }
+
+    button:hover {
+      background-color: #34c5f4;
+      cursor: pointer;
+
+    }
+
+    .delete {
+      background-color: #f44336;
+      padding: 4px 9px;
+      margin-left: 2%;
+      font-size: 10px;
+    }
+
+    .delete:hover {
+      background-color: #f78077;
+      cursor: pointer;
+    }
+
+    li {
+      font-size: 1.2em;
+    }
+
+    .accordion {
+      color: black;
+      cursor: pointer;
+
+      font-size: 1em;
+    }
+
+    .active,
+    .accordion:hover {
+      color: #7bd67e;
+    }
+
+    .panel {
+      padding: 0 18px;
+      display: none;
+      background-color: white;
+      overflow: hidden;
+    }
+
+    .yname {
+      margin-left: 0px;
+      padding: 5px 6px;
+      font-size: 12px;
+    }
+
+    input[name=yname] {
+      width: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <h3 style="font-weight:bold; text-align:center;">Frequent Flyers</h3>
+  <a class="accordion">Change Name</a>
+  <div class="panel">
+    <input type="text" name="yname" placeholder="Your name">
+    <button class="yname">Submit</button>
+
+  </div>
+  <ul id="professors-list">
+  </ul>
+
+  <div id="form">
+
+    <input type="text" name="fname" placeholder="First name">
+    <input type="text" name="lname" placeholder="Last name">
+    <br>
+    <input type="text" name="program" placeholder="Academic Program">
+    <input type="text" name="cohort" placeholder="Cohort">
+    <br>
+    <input class="courseNum" type="text" name="courseNum" placeholder="Course#: Enter with no space!">
+    <button class="add">add</button>
+  </div>
+
+</body>
+
 </html>

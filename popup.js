@@ -1,32 +1,7 @@
-// Update the relevant fields with the new data
-function setDOMInfo(info) {
-  // document.getElementById('total').textContent   = info.total;
-  // document.getElementById('inputs').textContent  = info.inputs;
-  // document.getElementById('buttons').textContent = info.buttons;
-}
-
-
 // Once the DOM is ready...
 window.addEventListener('DOMContentLoaded', function () {
 
-  // ...query for the active tab...
-  chrome.tabs.query({
-    active: true,
-    currentWindow: true
-  }, function (tabs) {
-    // ...and send a request for the DOM info...
-    chrome.tabs.sendMessage(
-      tabs[0].id, {
-        from: 'popup',
-        subject: 'DOMInfo'
-      },
-      // ...also specifying a callback to be called 
-      //    from the receiving end (content script)
-      setDOMInfo);
-  });
-
   chrome.storage.local.get('value', function (obj) {
-    console.log(obj.value);
     obj.value.map((professor, index) => //Load initial info
       $("#professors-list").append(`<li class=${index}>${professor} <button class="delete">Delete</button></li> `)
     );
@@ -41,16 +16,44 @@ window.addEventListener('DOMContentLoaded', function () {
       chrome.storage.local.set({ // update list after deletion
         'value': obj.value
       }, function () {
-        // location.reload();
+        chrome.tabs.query({
+          active: true,
+          currentWindow: true
+        }, function (tabs) {
+          chrome.tabs.sendMessage(
+            tabs[0].id, {
+              "message": "reload"
+            }
+          );
+        });
+        location.reload();
       });
+    });
+  });
 
+  $(".yname").on("click", function () {
+    let name = $("[name=yname]").val();
+    chrome.storage.local.set({
+      'name': name
+    }, function () {
+      chrome.tabs.query({
+        active: true,
+        currentWindow: true
+      }, function (tabs) {
+        chrome.tabs.sendMessage(
+          tabs[0].id, {
+            "message": "reload"
+          }
+        );
+      });
+      location.reload();
 
     });
 
   });
 
   $(".add").on("click", function () {
-    
+
     let firstName = $("[name=fname]").val();
     let lastName = $("[name=lname]").val();
     let program = $("[name=program]").val().toUpperCase();
@@ -73,15 +76,13 @@ window.addEventListener('DOMContentLoaded', function () {
           active: true,
           currentWindow: true
         }, function (tabs) {
-          // ...and send a request for the DOM info...
           chrome.tabs.sendMessage(
-            tabs[0].id,{"message": "reload"}
-            // ...also specifying a callback to be called 
-            //    from the receiving end (content script)
-            );
+            tabs[0].id, {
+              "message": "reload"
+            }
+          );
         });
-        
-        // chrome.tabs.sendMessage(tabs[0].id, {"message": "reload"});
+
         location.reload();
 
       });
@@ -90,5 +91,19 @@ window.addEventListener('DOMContentLoaded', function () {
 
   });
 
+  var acc = document.getElementsByClassName("accordion");
+  var i;
+
+  for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function () {
+      this.classList.toggle("active");
+      var panel = this.nextElementSibling;
+      if (panel.style.display === "block") {
+        panel.style.display = "none";
+      } else {
+        panel.style.display = "block";
+      }
+    });
+  }
 
 });

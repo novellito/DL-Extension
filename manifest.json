@@ -1,7 +1,8 @@
 {
     "manifest_version": 2,
-    "name":    "Test Extension",
-    "version": "0.0",
+    "name":    "DL-Extension",
+    "version": "1.0",
+    "icons": {"128":"icon_128.png"},
     "offline_enabled": true,
 
     "permissions": [
@@ -17,13 +18,13 @@
     "content_scripts": [{
       "matches":    ["http://www.csun.edu/exlinfo/dl/support/techsupport_staff.php"],
       "css":        ["styles.css"],
-      "js":         ["jquery-3.3.1.min.js", "typeahead.bundle.min.js", "content.js"],
+      "js":         ["./dependencies/jquery-3.3.1.min.js", "./dependencies/typeahead.bundle.min.js", "content.js"],
       "run_at":     "document_idle",
       "all_frames": false
     }],
   
     "page_action": {
-      "default_title": "Test Extension",
+      "default_title": "DL-Extension",
       "default_popup": "popup.html"
     }
   
