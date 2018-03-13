@@ -10,7 +10,7 @@ To use: Simple download the file and drag the folder into your chrome extensions
 (chrome://extensions/)
 
 
-## DL-Tech-Automator
+## DL-File-Deleter
 
 This script was created to help delete massive amounts of legacy content from our old course sites since it did not have a feature that let you delete all of the content at once.
 
