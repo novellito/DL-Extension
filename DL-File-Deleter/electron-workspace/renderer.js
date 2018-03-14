@@ -3,7 +3,6 @@ const { handleForm } = remote.require('./main');
 const currentWindow = remote.getCurrentWindow();
 const webdriver = require('selenium-webdriver');
 const By = webdriver.By;
-
 require('chromedriver');
 
 let chromeCapabilities = webdriver.Capabilities.chrome();
@@ -39,17 +38,9 @@ submitFormButton.addEventListener("submit",  function(event) {
 
 });
 
-ipcRenderer.on('send-err', function(event, args){
-    responseParagraph.innerHTML = args;
-});
-
-ipcRenderer.on('send-files', function(event, args){
-    runDriver(args);
-});
-
-ipcRenderer.on('send-folders', function(event, args){
-    runDriver(args);
-});
+ipcRenderer.on('send-err', args => responseParagraph.innerHTML = args);
+ipcRenderer.on('send-files', args => runDriver(args));
+ipcRenderer.on('send-folders', args => runDriver(args));
 
 async function runDriver(args) {
     let driver = new webdriver.Builder()
