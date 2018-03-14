@@ -6,22 +6,35 @@
     <link rel="stylesheet" href="index.css">
   </head>
   <body>
-    <h2>Legacy-Files-Deleter</h2>
+    <h3>DL-Files-Deleter</h3>
     
-    <form action="#" id="ipcForm2">
-      <input type="text" name="courseURL" id="courseURL" placeholder="Enter Course url">
-      <br>
-      
-      <input type="text" name="username" id="username" placeholder="username">
-      <br>
-      
-      <input type="password" name="password" id="password" placeholder="password">
+    <div class="form-body">
 
-      <br><br>
-      <input id="submit" type="submit" value="submit">
-  </form>
+      <form action="#" id="ipcForm2">
+        <input type="text" name="courseURL" id="courseURL" placeholder="Enter Course url">
+        <br>
+        <input type="text" name="username" id="username" placeholder="username">
+        <br>
+        <input type="password" name="password" id="password" placeholder="password">
+        <br>
+        <input type="number" name="folders" id="folders" placeholder="# of folders to delete">
+        <br>
+        <input type="number" name="files" id="files" placeholder="# of files to delete">
+        <br>
+        <button class="btn" id="submit" type="submit" value="submit">Run</button>
+      </form>
+    </div>
 
-  <p id="response"></p>
+    <p id="response"></p>
+
+    <div class="help">
+      <p>Instructions</p>
+      <b>IMPORTANT: delete files and folders separately!</b>
+      <p>Enter course url, username, password, and either # folders / # files <b>(only one!)</b></p>
+      <p>ex: Fill out # folders and click run. Once this finishes, make sure to click save in the browser. Clear your entry for # folders, and then you can enter # files to delete and click run</p>
+      <p>If something breaks just restart the application :)</p>
+    </div>
+
 
 
     <script>

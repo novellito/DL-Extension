@@ -2,22 +2,26 @@ const { app, ipcMain, BrowserWindow} = require('electron');
 const path = require('path');
 const url = require('url');
 
-// require('electron-context-menu')(); for inspect element
-
-
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-exports.handleForm = function handleForm(targetWindow, firstname) {
-  console.log("this is the firstname from the form ->", firstname);
+exports.handleForm = function handleForm(targetWindow, data) {
+  if(data.status === 'err') {
+    targetWindow.webContents.send('send-err', data.msg);
+  } else if (data.files) {
+    targetWindow.webContents.send('send-files', data);    
+  } else if (data.folders) {
+    targetWindow.webContents.send('send-folders', data);       
+  }
+
   targetWindow.webContents.send('form-received', "we got it");
 };
 
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600, resizable:false});
+  mainWindow = new BrowserWindow({width: 800, height: 770, resizable:false});
   // mainWindow.setMenu(null);
 
   // and load the index.html of the app.
@@ -28,7 +32,7 @@ function createWindow () {
   }));
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -36,7 +40,7 @@ function createWindow () {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null;
-  })
+  });
 }
 
 
