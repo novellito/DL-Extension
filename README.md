@@ -9,6 +9,8 @@ The extension uses Twitter's <a href="https://github.com/twitter/typeahead.js">t
 To use: Simple download the file and drag the folder into your chrome extensions directory
 (chrome://extensions/)
 
+![extension](https://user-images.githubusercontent.com/21237266/37437502-d40a15aa-27aa-11e8-95e6-994f22b380f2.png)
+
 
 ## DL-File-Deleter
 
