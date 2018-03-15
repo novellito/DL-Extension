@@ -1,0 +1,6 @@
+directories:
+  output: dist
+  buildResources: build
+appId: com.electron.moodle-app
+productName: Moodle File Deleter
+electronVersion: 1.8.3
