@@ -1,3 +1,4 @@
+/* This was the original script before I made the GUI*/
 const webdriver = require('selenium-webdriver');
 const By = webdriver.By;
 require('chromedriver');

@@ -4,25 +4,21 @@ const url = require('url');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
+let mainWindow;
 
-exports.handleForm = function handleForm(targetWindow, data) {
-  if(data.status === 'err') {
-    targetWindow.webContents.send('send-err', data.msg);
-  } else if (data.files) {
-    targetWindow.webContents.send('send-files', data);    
+exports.handleForm = async function  handleForm(targetWindow, data) {
+  if (data.files) {
+    await targetWindow.webContents.send('send-files', data);   
   } else if (data.folders) {
-    targetWindow.webContents.send('send-folders', data);       
+    await targetWindow.webContents.send('send-folders', data);       
   }
-
   targetWindow.webContents.send('form-received', "we got it");
 };
 
-
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 770, resizable:false});
-  // mainWindow.setMenu(null);
+  mainWindow = new BrowserWindow({width: 800, height: 900, resizable:false});
+  mainWindow.setMenu(null);
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -30,9 +26,6 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }));
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -42,12 +35,6 @@ function createWindow () {
     mainWindow = null;
   });
 }
-
-
-ipcMain.on('form-submission', function (event, firstname) {
-  console.log("this is the firstname from the form ->", firstname)
-});
-
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

@@ -2,14 +2,12 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>Moodle-Files-Deleter</title>
     <link rel="stylesheet" href="index.css">
   </head>
   <body>
-    <h3>DL-Files-Deleter</h3>
-    
+    <h3>Moodle-Files-Deleter</h3>
     <div class="form-body">
-
       <form action="#" id="ipcForm2">
         <input type="text" name="courseURL" id="courseURL" placeholder="Enter Course url">
         <br>
@@ -28,17 +26,19 @@
     <p id="response"></p>
 
     <div class="help">
-      <p>Instructions</p>
+      <p>Guide</p>
       <b>IMPORTANT: delete files and folders separately!</b>
+      <p>Note: If there are a lot of files or folders being deleted, enter an amount less than the total number of files/folders. In other words, don't enter an amount
+        greater than the number of files/folders you want to delete or else the application will crash.
+      </p>
       <p>Enter course url, username, password, and either # folders / # files <b>(only one!)</b></p>
       <p>ex: Fill out # folders and click run. Once this finishes, make sure to click save in the browser. Clear your entry for # folders, and then you can enter # files to delete and click run</p>
+      <p>Once the browser has opened up the section with all the files and folders, <b>it will take about 10 seconds for the files to start getting deleted.</b></p>
+      <p>The browser will automatically close after 2 minutes so make sure to hit save</b></p>
       <p>If something breaks just restart the application :)</p>
     </div>
 
-
-
     <script>
-      // You can also require other files to run in this process
       require('./renderer.js')
     </script>
   </body>
