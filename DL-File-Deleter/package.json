@@ -1,7 +1,7 @@
 {
-  "name": "electron-quick-start",
+  "name": "moodle-files-deleter",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "A Electron app built with selenium",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
@@ -9,13 +9,9 @@
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
     "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "selenium"
   ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "author": "Christian Trinidad",
   "devDependencies": {
     "electron": "^1.8.3"
   },
