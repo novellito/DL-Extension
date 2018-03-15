@@ -55,16 +55,16 @@ ipcRenderer.on('send-folders', (event,args) => runDriver(args));
 async function runDriver(args) {
 
     let driver = new webdriver.Builder()
-    .forBrowser('chrome').withCapabilities(chromeCapabilities)
-    .build();
+        .forBrowser('chrome').withCapabilities(chromeCapabilities)
+        .build();
 
     try {
 
-        await driver.get('https://auth.csun.edu/cas/login?service=https%3A%2F%2Fmoodle.csun.edu%2Flogin%2Findex.php');   
+        await driver.get('https://auth.csun.edu/cas/login?service=https%3A%2F%2Fmoodle.csun.edu%2Flogin%2Findex.php'); // log into CSUN
         await driver.findElement(By.xpath('//*[@id="username"]')).sendKeys(`${args.username}`);
         await driver.findElement(By.xpath('//*[@id="password"]')).sendKeys(`${args.password}`);
         await driver.findElement(By.xpath('//*[@id="fm1"]/fieldset/ol/li[3]/input[4]')).click();
-        await driver.get(args.courseURL);
+        await driver.get(args.courseURL); // redirect to moodle page
         await driver.executeScript("arguments[0].scrollIntoView(true);", driver.findElement(By.linkText('Legacy course files'))); // scroll to link
         await driver.findElement(By.linkText('Legacy course files')).click();
         await driver.executeScript("arguments[0].scrollIntoView(true);", driver.findElement(By.css('input[value="Edit legacy course files"]'))); // scroll to bottom of page
@@ -74,22 +74,22 @@ async function runDriver(args) {
         if(args.files) {
         
              for(let i = 0; i < args.files; i++) {
-
-                    await driver.findElement(By.css('div.fp-file.fp-hascontextmenu:first-child')).click(); 
-                    await driver.findElement(By.css('.fp-file-delete')).click();
-                    await driver.findElement(By.css('.fp-dlg-butconfirm.btn-primary.btn')).click(); //confirm delete button
-                    await driver.sleep(5000); //wait for widget to load
+                await driver.findElement(By.css('div.fp-file.fp-hascontextmenu:first-child')).click(); 
+                await driver.findElement(By.css('.fp-file-delete')).click();
+                await driver.findElement(By.css('.fp-dlg-butconfirm.btn-primary.btn')).click(); //confirm delete button
+                await driver.sleep(5000); //wait for widget to load
             }
             responseParagraph.innerHTML = "<b>Files have been deleted! Please make sure to save!</b>";
             await driver.sleep(120000); // wait 2 minutes before closing browser
             await driver.quit();
-        } else {
-            for(let i = 0; i < args.folders; i++) { 
 
-                    await driver.findElement(By.css('div.fp-file.fp-hascontextmenu:first-child a.fp-contextmenu')).click();
-                    await driver.findElement(By.css('.fp-file-delete')).click();
-                    await driver.findElement(By.css('.fp-dlg-butconfirm.btn-primary.btn')).click();
-                    await driver.sleep(5000); //wait for widget to load
+        } else {
+            
+            for(let i = 0; i < args.folders; i++) { 
+                await driver.findElement(By.css('div.fp-file.fp-hascontextmenu:first-child a.fp-contextmenu')).click();
+                await driver.findElement(By.css('.fp-file-delete')).click();
+                await driver.findElement(By.css('.fp-dlg-butconfirm.btn-primary.btn')).click();
+                await driver.sleep(5000); //wait for widget to load
             }
             responseParagraph.innerHTML = "<b>Folders have been deleted! Please make sure to save!</b>";
             await driver.sleep(120000); // wait 2 minutes before closing browser
