@@ -96,6 +96,7 @@ async function runDriver(args) {
             await driver.quit();
         }
     } catch(err) {
+        console.log(err);
         responseParagraph.innerHTML = "<b>Broswer window has been closed!</b>";
         await driver.quit();
     }

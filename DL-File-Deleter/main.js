@@ -12,7 +12,7 @@ exports.handleForm = async function handleForm(targetWindow, data) {
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 900, resizable:false});
-  mainWindow.setMenu(null);
+  // mainWindow.setMenu(null);
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({

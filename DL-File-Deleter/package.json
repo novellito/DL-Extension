@@ -1,23 +1,25 @@
 {
-  "name": "moodle-files-deleter",
+  "name": "legacy-files-deleter",
   "version": "1.0.0",
   "description": "A Electron app built with selenium",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "package-win": "electron-packager . legacy-files-deleter --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Legacy Files Deleter\""
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/novellito/Tseng-Utilities/tree/master/DL-File-Deleter",
   "keywords": [
     "Electron",
-    "selenium"
+    "selenium",
+    "Moodle"
   ],
   "author": "Christian Trinidad",
   "devDependencies": {
-    "electron": "^1.8.3"
+    "electron": "^1.8.3",
+    "electron-packager": "^11.1.0"
   },
   "dependencies": {
-    "chromedriver": "^2.36.0",
-    "electron-context-menu": "^0.9.1",
-    "selenium-webdriver": "^4.0.0-alpha.1"
+    "selenium-webdriver": "^4.0.0-alpha.1",
+    "chromedriver": "^2.36.0"
   }
 }
